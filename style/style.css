@@ -1,0 +1,2002 @@
+/* ============================================================
+   MEUS POEMAS — STYLES PRINCIPAL
+   Autor: Marco Aurélio
+   Estrutura:
+     1. Reset
+     2. Variáveis (tema claro/escuro)
+     3. Body
+     4. Canvas de fundo
+     5. Header + Menu lateral
+     6. Hero
+     7. Seções de poemas
+     8. Cards (glassmorphism)
+     9. Página do poema
+    10. Ações do poema
+    11. Anotações pessoais
+    12. Navegação entre poemas
+    13. Compartilhar
+    14. Como nasceu
+    15. Fundos dos poemas
+    16. Barra de progresso
+    17. Frase do dia
+    18. Poema do dia
+    19. Newsletter / Sobre / Cards / Footer
+    20. Formulário de contato (REFORÇADO)
+    21. Botões de contato (REFORÇADO)
+    22. Redes sociais (REFORÇADO)
+    23. Botão topo
+    24. Animações de entrada
+    25. Galeria / Lightbox / Pensamentos
+    26. Easter egg
+    27. Estatísticas
+    28. Impressão
+    29. Responsivo
+   ============================================================ */
+
+/* ============================================================
+   1. RESET
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================
+   2. VARIÁVEIS — TEMA CLARO
+   ============================================================ */
+:root {
+    --cor-fundo: #faf6f0;
+    --cor-fundo-alt: #f5ede2;
+    --cor-fundo-card: #ffffff;
+    --cor-fundo-conteudo: rgba(255, 255, 255, 0.98);
+
+    --cor-texto: #2b2b2b;
+    --cor-texto-suave: #7a7a7a;
+    --cor-texto-versos: #3d3d3d;
+    --cor-texto-card: #4a4a4a;
+    --cor-texto-legenda: #9a9a9a;
+
+    --cor-primaria: #1c2f52;
+    --cor-primaria-escura: #0f1d38;
+    --cor-secundaria: #8b6f47;
+    --cor-dourada: #c9a961;
+    --cor-dourada-clara: #e0c890;
+
+    --cor-header: rgba(28, 47, 82, 0.92);
+    --cor-header-texto: #e8dfd0;
+    --cor-footer: #1c2f52;
+    --cor-footer-texto: #d4c9b8;
+    --cor-footer-texto-suave: #b0a690;
+    --cor-footer-texto-fraco: #8a8070;
+
+    --cor-citacao-fundo: #f5ede2;
+    --cor-borda: #e0d5c2;
+    --cor-borda-suave: #ede5d5;
+    --cor-input-fundo: #faf7f1;
+    --cor-input-fundo-focus: #ffffff;
+
+    --cor-sombra: rgba(28, 47, 82, 0.08);
+    --cor-sombra-media: rgba(28, 47, 82, 0.12);
+    --cor-sombra-forte: rgba(28, 47, 82, 0.2);
+    --cor-sombra-dourada: rgba(201, 169, 97, 0.25);
+
+    --transicao-suave: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transicao-media: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body.dark-mode {
+    --cor-fundo: #0f1218;
+    --cor-fundo-alt: #151922;
+    --cor-fundo-card: #1a1f2e;
+    --cor-fundo-conteudo: rgba(26, 31, 46, 0.98);
+
+    --cor-texto: #e8e4dd;
+    --cor-texto-suave: #9a9488;
+    --cor-texto-versos: #d5d0c5;
+    --cor-texto-card: #bfb9ad;
+    --cor-texto-legenda: #807a70;
+
+    --cor-primaria: #a8c0e8;
+    --cor-primaria-escura: #7ba3e0;
+    --cor-secundaria: #c9a961;
+    --cor-dourada: #e0c890;
+    --cor-dourada-clara: #f0dcb0;
+
+    --cor-header: rgba(15, 18, 24, 0.94);
+    --cor-header-texto: #c9b896;
+    --cor-footer: #0a0c12;
+    --cor-footer-texto: #a89b80;
+    --cor-footer-texto-suave: #807560;
+    --cor-footer-texto-fraco: #5a5245;
+
+    --cor-citacao-fundo: #1a1f2e;
+    --cor-borda: #2a3040;
+    --cor-borda-suave: #232838;
+    --cor-input-fundo: #1a1f2e;
+    --cor-input-fundo-focus: #232838;
+
+    --cor-sombra: rgba(0, 0, 0, 0.4);
+    --cor-sombra-media: rgba(0, 0, 0, 0.5);
+    --cor-sombra-forte: rgba(0, 0, 0, 0.7);
+    --cor-sombra-dourada: rgba(224, 200, 144, 0.2);
+}
+
+/* ============================================================
+   3. BODY
+   ============================================================ */
+body {
+    font-family: 'Cormorant Garamond', 'Lora', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   4. CANVAS DE FUNDO
+   ============================================================ */
+#cursor-particulas,
+#estrelas,
+#fundo-suave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+#cursor-particulas { z-index: 9999; }
+#estrelas { z-index: -1; display: none; }
+#fundo-suave { z-index: -2; opacity: 0.6; }
+body.dark-mode #estrelas { display: block; }
+body.dark-mode #fundo-suave { opacity: 0.8; }
+
+/* ============================================================
+   5. HEADER + MENU LATERAL
+   ============================================================ */
+header {
+    background-color: var(--cor-header);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 4px 30px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+nav .logo {
+    color: var(--cor-dourada);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 10px rgba(201, 169, 97, 0.3);
+    transition: var(--transicao-suave);
+    cursor: pointer;
+}
+nav .logo:hover {
+    text-shadow: 0 4px 20px rgba(201, 169, 97, 0.6);
+    transform: scale(1.03);
+}
+
+nav ul {
+    list-style: none;
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    background: linear-gradient(165deg, #1c2f52 0%, #0a1428 60%, #050a14 100%);
+    flex-direction: column;
+    padding: 130px 0 40px;
+    gap: 0;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+    transition: right 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 999;
+    overflow-y: auto;
+    border-left: 1px solid rgba(201, 169, 97, 0.25);
+}
+
+nav ul::before {
+    content: 'Menu';
+    position: absolute;
+    top: 55px;
+    left: 40px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #c9a961;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 20px rgba(201, 169, 97, 0.4);
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+}
+nav ul.aberto::before { opacity: 1; transform: translateY(0); }
+
+nav ul::after {
+    content: '';
+    position: absolute;
+    top: 110px;
+    left: 40px;
+    width: 60px;
+    height: 1.5px;
+    background: linear-gradient(90deg, #c9a961, transparent);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.35s;
+}
+nav ul.aberto::after { opacity: 1; }
+nav ul.aberto { right: 0; }
+
+nav ul li {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.08);
+    padding: 0 40px;
+}
+nav ul.aberto li { opacity: 1; transform: translateX(0); }
+nav ul.aberto li:nth-child(1) { transition-delay: 0.25s; }
+nav ul.aberto li:nth-child(2) { transition-delay: 0.32s; }
+nav ul.aberto li:nth-child(3) { transition-delay: 0.39s; }
+nav ul.aberto li:nth-child(4) { transition-delay: 0.46s; }
+nav ul.aberto li:nth-child(5) { transition-delay: 0.53s; }
+nav ul.aberto li:nth-child(6) { transition-delay: 0.6s; }
+nav ul.aberto li:nth-child(7) { transition-delay: 0.67s; }
+nav ul.aberto li:nth-child(8) { transition-delay: 0.74s; }
+
+nav a {
+    color: #e8dfd0;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+    padding: 22px 0;
+    position: relative;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    width: 30px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #c9a961);
+    transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+nav a::after {
+    content: '→';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    color: #c9a961;
+    font-size: 1.3rem;
+    opacity: 0;
+    transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+nav a:hover,
+nav a.active {
+    color: #c9a961;
+    padding-left: 25px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px rgba(201, 169, 97, 0.6);
+}
+nav a:hover::before,
+nav a.active::before {
+    transform: translateY(-50%) scaleX(1);
+    left: 0;
+}
+nav a:hover::after,
+nav a.active::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Botões do header */
+.btn-tema, .btn-idioma, .btn-menu {
+    background: transparent;
+    border: 1.5px solid rgba(201, 169, 97, 0.5);
+    color: var(--cor-dourada);
+    height: 42px;
+    min-width: 42px;
+    padding: 0 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transicao-media);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1001;
+}
+.btn-tema:hover, .btn-idioma:hover {
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(201, 169, 97, 0.1));
+    border-color: var(--cor-dourada);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--cor-sombra-dourada);
+}
+.btn-idioma { min-width: 58px; font-size: 0.82rem; }
+
+.btn-menu {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 0;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: auto;
+    order: 3;
+}
+.btn-menu span {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--cor-dourada);
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform-origin: center;
+}
+.btn-menu:hover span:nth-child(1) { transform: translateX(-3px); }
+.btn-menu:hover span:nth-child(3) { transform: translateX(3px); }
+.btn-menu.ativo span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.btn-menu.ativo span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.btn-menu.ativo span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 998;
+}
+.menu-overlay.ativo { opacity: 1; pointer-events: auto; }
+
+/* ============================================================
+   6. HERO
+   ============================================================ */
+#hero {
+    position: relative;
+    height: 90vh;
+    min-height: 620px;
+    background-image:
+        linear-gradient(135deg, rgba(15, 20, 40, 0.75) 0%, rgba(28, 47, 82, 0.55) 50%, rgba(15, 20, 40, 0.75) 100%),
+        url("https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+#hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+#particulas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+.hero-conteudo {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeInUp 1.2s ease;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 4.5rem;
+    font-weight: 600;
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 1.8rem;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6), 0 0 60px rgba(201, 169, 97, 0.2);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+}
+#hero h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cor-dourada), transparent);
+    margin: 1.5rem auto 0;
+    animation: expandirLinha 1.5s ease 0.5s both;
+}
+@keyframes expandirLinha {
+    from { width: 0; opacity: 0; }
+    to { width: 80px; opacity: 1; }
+}
+#hero p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    font-weight: 400;
+    color: #f0e8d8;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+    line-height: 1.8;
+}
+
+.btn {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--cor-dourada);
+    padding: 1rem 2.5rem;
+    border: 1.5px solid var(--cor-dourada);
+    border-radius: 50px;
+    margin-top: 2rem;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    position: relative;
+    overflow: hidden;
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+.btn:hover::before { left: 100%; }
+.btn:hover {
+    background-color: var(--cor-dourada);
+    color: var(--cor-primaria-escura);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(201, 169, 97, 0.4);
+    letter-spacing: 3.5px;
+}
+
+/* ============================================================
+   7. SEÇÕES DE POEMAS
+   ============================================================ */
+.poemas {
+    padding: 100px 24px;
+    background-color: var(--cor-fundo);
+    text-align: center;
+    position: relative;
+}
+.poemas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cor-dourada), transparent);
+}
+.section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 15px;
+    color: var(--cor-primaria);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--cor-dourada), transparent);
+    margin: 20px auto 50px;
+}
+
+.busca-container { max-width: 520px; margin: 0 auto 40px; }
+#campo-busca {
+    width: 100%;
+    padding: 16px 28px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-texto);
+    text-align: center;
+    font-style: italic;
+    transition: var(--transicao-suave);
+    letter-spacing: 0.5px;
+}
+#campo-busca:focus {
+    outline: none;
+    border-color: var(--cor-dourada);
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.1), 0 4px 20px var(--cor-sombra);
+    transform: translateY(-2px);
+}
+
+.filtros-tema {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto 40px;
+    max-width: 900px;
+}
+.filtro-btn {
+    background-color: transparent;
+    color: var(--cor-primaria);
+    border: 1.5px solid var(--cor-borda);
+    padding: 9px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+.filtro-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    transform: scale(0);
+    border-radius: 50px;
+    transition: transform 0.4s ease;
+    z-index: -1;
+}
+.filtro-btn:hover::before,
+.filtro-btn.ativo::before { transform: scale(1); }
+.filtro-btn:hover,
+.filtro-btn.ativo {
+    color: #fff;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 8px 25px var(--cor-sombra-media);
+    transform: translateY(-2px);
+}
+
+.btn-aleatorio {
+    display: block;
+    margin: 0 auto 50px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+    box-shadow: 0 8px 25px var(--cor-sombra-media);
+    position: relative;
+    overflow: hidden;
+    animation: pulsoDourado 3s ease-in-out infinite;
+}
+.btn-aleatorio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transition: left 0.7s ease;
+}
+.btn-aleatorio:hover::before { left: 150%; }
+.btn-aleatorio:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--cor-sombra-forte); }
+
+@keyframes pulsoDourado {
+    0%, 100% { box-shadow: 0 8px 25px var(--cor-sombra-media); }
+    50% { box-shadow: 0 8px 25px var(--cor-sombra-media), 0 0 30px rgba(201, 169, 97, 0.4); }
+}
+
+/* ============================================================
+   8. CARDS — GLASSMORPHISM
+   ============================================================ */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.card-poema {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.75));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--cor-texto);
+    flex: 1 1 300px;
+    max-width: 340px;
+    box-shadow:
+        0 8px 32px rgba(28, 47, 82, 0.1),
+        0 1px 3px rgba(28, 47, 82, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+body.dark-mode .card-poema {
+    background: linear-gradient(145deg, rgba(26, 31, 46, 0.95), rgba(26, 31, 46, 0.7));
+    border: 1px solid rgba(201, 169, 97, 0.15);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.card-poema::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201, 169, 97, 0.15) 50%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+.card-poema:hover::after { opacity: 1; }
+.card-poema::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent, var(--cor-dourada), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+.card-poema:hover::before { opacity: 1; }
+.card-poema:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow:
+        0 25px 60px rgba(28, 47, 82, 0.25),
+        0 12px 25px rgba(201, 169, 97, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.card-poema img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+.card-poema:hover img { transform: scale(1.08); }
+.card-poema h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--cor-primaria);
+    margin: 22px 0 10px;
+    padding: 0 20px;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+.card-poema:hover h3 { color: var(--cor-dourada); }
+.card-poema p {
+    color: var(--cor-texto-legenda);
+    font-size: 0.9rem;
+    padding: 0 20px 22px;
+    font-style: italic;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   9. PÁGINA DO POEMA
+   ============================================================ */
+.poema-pagina {
+    min-height: 100vh;
+    background-color: var(--cor-fundo);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 24px;
+}
+.poema-conteudo {
+    background-color: var(--cor-fundo-conteudo);
+    max-width: 760px;
+    width: 100%;
+    padding: 60px 55px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px var(--cor-sombra-forte), 0 4px 20px var(--cor-sombra);
+    text-align: center;
+    border: 1px solid var(--cor-borda-suave);
+    position: relative;
+    animation: fadeInUp 1s ease;
+}
+.poema-conteudo::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cor-dourada), transparent);
+}
+.poema-img {
+    width: 100%;
+    max-width: 620px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+    box-shadow: 0 8px 30px var(--cor-sombra-media);
+    transition: var(--transicao-suave);
+}
+.poema-img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 40px var(--cor-sombra-forte);
+}
+.poema-conteudo h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--cor-primaria);
+    margin-bottom: 25px;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+    position: relative;
+    padding-bottom: 25px;
+}
+.poema-conteudo h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cor-dourada), transparent);
+}
+.meta-poema {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    font-size: 0.95rem;
+    color: var(--cor-texto-suave);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+.versos {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    line-height: 2.4;
+    color: var(--cor-texto-versos);
+    font-style: italic;
+    margin-bottom: 45px;
+    text-align: left;
+    letter-spacing: 0.3px;
+    word-spacing: 1px;
+    padding: 20px 0 20px 25px;
+    border-left: 3px solid transparent;
+    background: linear-gradient(90deg, rgba(201, 169, 97, 0.06) 0%, transparent 30%);
+    border-radius: 0 12px 12px 0;
+}
+.versos::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--cor-dourada);
+    float: left;
+    line-height: 0.85;
+    margin: 8px 15px 0 0;
+    text-shadow: 2px 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+/* ============================================================
+   10. AÇÕES DO POEMA
+   ============================================================ */
+.acoes-poema {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px 0;
+}
+.btn-favoritar, .btn-copiar, .btn-foco, .btn-voz {
+    background-color: transparent;
+    color: var(--cor-primaria);
+    border: 1.5px solid var(--cor-borda);
+    padding: 11px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    position: relative;
+    overflow: hidden;
+}
+.btn-favoritar::before, .btn-copiar::before, .btn-foco::before, .btn-voz::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transition: left 0.7s ease;
+}
+.btn-favoritar:hover::before,
+.btn-copiar:hover::before,
+.btn-foco:hover::before,
+.btn-voz:hover::before { left: 150%; }
+.btn-favoritar:hover, .btn-copiar:hover, .btn-foco:hover, .btn-voz:hover {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border-color: var(--cor-primaria);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--cor-sombra-media);
+}
+.btn-favoritar.ativo {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    border-color: #e74c3c;
+}
+.btn-favoritar.pulso { animation: pulso 0.5s ease; }
+@keyframes pulso {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+.btn-voz.ativo {
+    background: linear-gradient(135deg, var(--cor-dourada), var(--cor-secundaria));
+    color: #fff;
+    border-color: var(--cor-dourada);
+}
+
+/* ============================================================
+   11. ANOTAÇÕES PESSOAIS
+   ============================================================ */
+.btn-anotar {
+    display: block;
+    margin: 20px auto;
+    background-color: transparent;
+    color: var(--cor-dourada);
+    border: 1.5px dashed var(--cor-dourada);
+    padding: 10px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+}
+.btn-anotar:hover { background: rgba(201, 169, 97, 0.1); transform: scale(1.03); }
+
+.painel-anotacao {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    background: var(--cor-citacao-fundo);
+    border-radius: 16px;
+    padding: 0 25px;
+    margin: 15px 0;
+    text-align: left;
+}
+.painel-anotacao.aberto {
+    max-height: 500px;
+    padding: 25px;
+    border: 1px solid var(--cor-borda);
+}
+.painel-anotacao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--cor-primaria);
+    font-size: 1.05rem;
+}
+.btn-fechar-anotacao {
+    background: none;
+    border: none;
+    color: var(--cor-dourada);
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.painel-anotacao textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--cor-texto);
+    background: var(--cor-input-fundo);
+    resize: vertical;
+    font-style: italic;
+}
+.painel-anotacao textarea:focus {
+    outline: none;
+    border-color: var(--cor-dourada);
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.12);
+}
+.btn-salvar-anotacao {
+    margin-top: 15px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+}
+.btn-salvar-anotacao:hover { transform: translateY(-3px); box-shadow: 0 10px 25px var(--cor-sombra-media); }
+
+/* ============================================================
+   12. NAVEGAÇÃO ENTRE POEMAS
+   ============================================================ */
+.navegacao-poemas {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--cor-borda-suave);
+}
+.btn-nav {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    box-shadow: 0 6px 20px var(--cor-sombra-media);
+    position: relative;
+    overflow: hidden;
+}
+.btn-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transition: left 0.7s ease;
+}
+.btn-nav:hover::before { left: 150%; }
+.btn-nav:hover { transform: translateY(-3px); box-shadow: 0 12px 30px var(--cor-sombra-forte); }
+
+.btn-voltar {
+    display: inline-block;
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    margin-bottom: 30px;
+    text-align: left;
+    transition: var(--transicao-suave);
+    letter-spacing: 0.3px;
+}
+.btn-voltar:hover { color: var(--cor-dourada); transform: translateX(-6px); }
+
+/* ============================================================
+   13. COMPARTILHAR
+   ============================================================ */
+.compartilhar {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid var(--cor-borda-suave);
+    text-align: center;
+}
+.compartilhar p {
+    font-style: italic;
+    color: var(--cor-texto-suave);
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+.btn-share {
+    background-color: transparent;
+    color: var(--cor-primaria);
+    border: 1.5px solid var(--cor-borda);
+    padding: 10px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    position: relative;
+    overflow: hidden;
+}
+.btn-share::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transition: left 0.7s ease;
+}
+.btn-share:hover::before { left: 150%; }
+.btn-share:hover {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border-color: var(--cor-primaria);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--cor-sombra-media);
+}
+
+/* ============================================================
+   14. COMO NASCEU
+   ============================================================ */
+.como-nasceu {
+    margin: 35px 0;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+    background-color: var(--cor-citacao-fundo);
+}
+.como-nasceu:hover {
+    border-color: var(--cor-dourada);
+    box-shadow: 0 8px 25px var(--cor-sombra);
+}
+.como-nasceu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    font-style: italic;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+.como-nasceu-seta {
+    transition: transform 0.4s ease;
+    font-size: 1.1rem;
+    color: var(--cor-dourada);
+}
+.como-nasceu.aberto .como-nasceu-seta { transform: rotate(180deg); }
+.como-nasceu-conteudo {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0 26px;
+    text-align: left;
+}
+.como-nasceu.aberto .como-nasceu-conteudo { max-height: 500px; padding: 0 26px 26px; }
+.como-nasceu-conteudo p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    line-height: 2;
+    color: var(--cor-texto-versos);
+    font-size: 1.1rem;
+}
+
+/* ============================================================
+   15. FUNDOS DOS POEMAS
+   ============================================================ */
+.fundo-poema1, .fundo-poema2, .fundo-poema3, .fundo-poema4, .fundo-poema5,
+.fundo-poema6, .fundo-poema7, .fundo-poema8, .fundo-poema9, .fundo-poema10,
+.fundo-poema11, .fundo-poema12, .fundo-poema13, .fundo-poema14, .fundo-poema15,
+.fundo-poema16, .fundo-poema17, .fundo-poema18, .fundo-poema19, .fundo-poema20,
+.fundo-poema21, .fundo-poema22, .fundo-poema23, .fundo-poema24, .fundo-poema25,
+.fundo-poema26, .fundo-poema27, .fundo-poema28, .fundo-poema29, .fundo-poema30,
+.fundo-poema31,
+.fundo-sobre, .fundo-contato, .fundo-pensamentos, .fundo-galeria, .fundo-favoritos {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.fundo-poema1 { background-image: linear-gradient(rgba(20,30,40,0.72), rgba(20,30,40,0.72)), url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600"); }
+.fundo-poema2 { background-image: linear-gradient(rgba(35,25,40,0.72), rgba(35,25,40,0.72)), url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600"); }
+.fundo-poema3 { background-image: linear-gradient(rgba(25,40,30,0.72), rgba(25,40,30,0.72)), url("https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1600"); }
+.fundo-poema4 { background-image: linear-gradient(rgba(45,30,20,0.72), rgba(45,30,20,0.72)), url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600"); }
+.fundo-poema5 { background-image: linear-gradient(rgba(30,25,45,0.72), rgba(30,25,45,0.72)), url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600"); }
+.fundo-poema6 { background-image: linear-gradient(rgba(35,30,25,0.72), rgba(35,30,25,0.72)), url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600"); }
+.fundo-poema7 { background-image: linear-gradient(rgba(30,40,55,0.72), rgba(30,40,55,0.72)), url("https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1600"); }
+.fundo-poema8 { background-image: linear-gradient(rgba(45,35,30,0.72), rgba(45,35,30,0.72)), url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=1600"); }
+.fundo-poema9 { background-image: linear-gradient(rgba(30,45,35,0.72), rgba(30,45,35,0.72)), url("https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600"); }
+.fundo-poema10 { background-image: linear-gradient(rgba(40,35,50,0.72), rgba(40,35,50,0.72)), url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600"); }
+.fundo-poema11 { background-image: linear-gradient(rgba(50,40,30,0.72), rgba(50,40,30,0.72)), url("https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1600"); }
+.fundo-poema12 { background-image: linear-gradient(rgba(55,45,35,0.72), rgba(55,45,35,0.72)), url("https://images.unsplash.com/photo-1525351484163-7529414344d8?w=1600"); }
+.fundo-poema13 { background-image: linear-gradient(rgba(40,30,30,0.72), rgba(40,30,30,0.72)), url("https://images.unsplash.com/photo-1516575334481-f85287c2c82d?w=1600"); }
+.fundo-poema14 { background-image: linear-gradient(rgba(35,40,50,0.72), rgba(35,40,50,0.72)), url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600"); }
+.fundo-poema15 { background-image: linear-gradient(rgba(30,40,45,0.72), rgba(30,40,45,0.72)), url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600"); }
+.fundo-poema16 { background-image: linear-gradient(rgba(20,15,30,0.78), rgba(20,15,30,0.78)), url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=1600"); }
+.fundo-poema17 { background-image: linear-gradient(rgba(15,20,35,0.78), rgba(15,20,35,0.78)), url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600"); }
+.fundo-poema18 { background-image: linear-gradient(rgba(35,30,20,0.78), rgba(35,30,20,0.78)), url("https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1600"); }
+.fundo-poema19 { background-image: linear-gradient(rgba(40,35,25,0.78), rgba(40,35,25,0.78)), url("https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1600"); }
+.fundo-poema20 { background-image: linear-gradient(rgba(30,25,20,0.78), rgba(30,25,20,0.78)), url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600"); }
+.fundo-poema21 { background-image: linear-gradient(rgba(25,30,40,0.78), rgba(25,30,40,0.78)), url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600"); }
+.fundo-poema22 { background-image: linear-gradient(rgba(45,25,35,0.75), rgba(45,25,35,0.75)), url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1600"); }
+.fundo-poema23 { background-image: linear-gradient(rgba(30,20,35,0.78), rgba(30,20,35,0.78)), url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600"); }
+.fundo-poema24 { background-image: linear-gradient(rgba(50,40,25,0.72), rgba(50,40,25,0.72)), url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600"); }
+.fundo-poema25 { background-image: linear-gradient(rgba(30,45,30,0.72), rgba(30,45,30,0.72)), url("https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600"); }
+.fundo-poema26 { background-image: linear-gradient(rgba(20,35,45,0.75), rgba(20,35,45,0.75)), url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600"); }
+.fundo-poema27 { background-image: linear-gradient(rgba(40,35,30,0.72), rgba(40,35,30,0.72)), url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600"); }
+.fundo-poema28 { background-image: linear-gradient(rgba(25,25,35,0.78), rgba(25,25,35,0.78)), url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600"); }
+.fundo-poema29 { background-image: linear-gradient(rgba(20,25,40,0.75), rgba(20,25,40,0.75)), url("https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600"); }
+.fundo-poema30 { background-image: linear-gradient(rgba(30,25,35,0.8), rgba(30,25,35,0.8)), url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600"); }
+.fundo-poema31 { background-image: linear-gradient(rgba(45,35,25,0.72), rgba(45,35,25,0.72)), url("https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600"); }
+.fundo-sobre { background-image: linear-gradient(rgba(30,35,55,0.78), rgba(30,35,55,0.78)), url("https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1600"); }
+.fundo-contato { background-image: linear-gradient(rgba(40,30,25,0.78), rgba(40,30,25,0.78)), url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600"); }
+.fundo-pensamentos { background-image: linear-gradient(rgba(30,35,55,0.82), rgba(30,35,55,0.82)), url("https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600"); }
+.fundo-galeria { background-image: linear-gradient(rgba(25,30,45,0.85), rgba(25,30,45,0.85)), url("https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1600"); }
+.fundo-favoritos { background-image: linear-gradient(rgba(60,20,30,0.82), rgba(60,20,30,0.82)), url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=1600"); }
+
+/* ============================================================
+   16. BARRA DE PROGRESSO
+   ============================================================ */
+.barra-progresso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, var(--cor-dourada), var(--cor-dourada-clara), var(--cor-dourada));
+    z-index: 9999;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 12px rgba(201, 169, 97, 0.7);
+}
+
+/* ============================================================
+   17. FRASE DO DIA
+   ============================================================ */
+.frase-do-dia {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px 40px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px var(--cor-sombra-forte);
+    position: relative;
+    overflow: hidden;
+}
+.frase-do-dia::before {
+    content: '"';
+    position: absolute;
+    top: -30px;
+    left: 30px;
+    font-size: 10rem;
+    color: rgba(201, 169, 97, 0.2);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+.frase-do-dia-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--cor-dourada);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+.frase-do-dia-texto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.9;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+}
+.frase-do-dia-autor {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cor-dourada);
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+.btn-baixar-frase {
+    background: var(--cor-dourada);
+    color: var(--cor-primaria-escura);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+    position: relative;
+    z-index: 1;
+}
+.btn-baixar-frase:hover {
+    background: var(--cor-dourada-clara);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(201, 169, 97, 0.5);
+}
+
+/* ============================================================
+   18. POEMA DO DIA
+   ============================================================ */
+.poema-do-dia-container {
+    max-width: 720px;
+    margin: 0 auto 70px;
+    padding: 50px 40px;
+    background-color: var(--cor-fundo-conteudo);
+    border-radius: 20px;
+    border-left: 4px solid var(--cor-dourada);
+    box-shadow: 0 15px 45px var(--cor-sombra-media);
+    text-align: center;
+    position: relative;
+    border: 1px solid var(--cor-borda-suave);
+}
+.poema-do-dia-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--cor-dourada);
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.poema-do-dia-container h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+.poema-do-dia-verso {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--cor-texto-versos);
+    margin-bottom: 30px;
+    line-height: 1.9;
+}
+
+/* ============================================================
+   19. NEWSLETTER / SOBRE / CARDS / FOOTER
+   ============================================================ */
+.newsletter {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    padding: 70px 25px;
+    text-align: center;
+    margin-top: 60px;
+    position: relative;
+    overflow: hidden;
+}
+.newsletter::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.15) 0%, transparent 70%);
+    animation: girar 30s linear infinite;
+    pointer-events: none;
+}
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.newsletter h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+.newsletter p {
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    font-style: italic;
+    font-size: 1.15rem;
+    position: relative;
+    z-index: 1;
+}
+.form-newsletter {
+    display: flex;
+    gap: 12px;
+    max-width: 520px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+.form-newsletter input {
+    flex: 1;
+    min-width: 250px;
+    padding: 14px 22px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+.form-newsletter input::placeholder { color: rgba(255, 255, 255, 0.7); font-style: italic; }
+.form-newsletter input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--cor-dourada);
+}
+.form-newsletter button {
+    background-color: var(--cor-dourada);
+    color: var(--cor-primaria-escura);
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+    font-size: 0.95rem;
+}
+.form-newsletter button:hover {
+    background-color: var(--cor-dourada-clara);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(201, 169, 97, 0.4);
+}
+
+.sobre {
+    padding: 100px 24px;
+    background-color: var(--cor-fundo-card);
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.sobre-conteudo { max-width: 760px; margin: 0 auto 60px; }
+.sobre-img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 35px;
+    border: 3px solid var(--cor-dourada);
+    box-shadow: 0 8px 30px var(--cor-sombra-media), 0 0 0 8px rgba(201, 169, 97, 0.1);
+    transition: var(--transicao-suave);
+}
+.sobre-img:hover {
+    transform: scale(1.03) rotate(-1deg);
+    box-shadow: 0 12px 40px var(--cor-sombra-forte), 0 0 0 12px rgba(201, 169, 97, 0.15);
+}
+.sobre-texto {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    color: var(--cor-texto-versos);
+    font-style: italic;
+    margin-bottom: 25px;
+    text-align: left;
+}
+.sobre-texto strong { color: var(--cor-primaria); font-weight: 700; }
+.sobre-citacao {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--cor-primaria);
+    padding: 30px;
+    border-left: 3px solid var(--cor-dourada);
+    background-color: var(--cor-citacao-fundo);
+    border-radius: 12px;
+    margin: 40px 0;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.6;
+    position: relative;
+}
+.sobre-citacao::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 5rem;
+    color: var(--cor-dourada);
+    opacity: 0.3;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+
+.card {
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    padding: 40px 30px;
+    flex: 1 1 280px;
+    max-width: 340px;
+    box-shadow: 0 6px 25px var(--cor-sombra);
+    transition: var(--transicao-suave);
+    text-align: center;
+    border: 1px solid var(--cor-borda-suave);
+    border-top: 3px solid var(--cor-dourada);
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 45px var(--cor-sombra-forte);
+    border-top-color: var(--cor-primaria);
+}
+.card-icone { font-size: 2.8rem; margin-bottom: 20px; display: block; }
+.card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--cor-primaria);
+    margin-bottom: 15px;
+}
+.card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--cor-texto-card);
+    line-height: 1.9;
+    font-style: italic;
+}
+
+footer {
+    background-color: var(--cor-footer);
+    color: var(--cor-footer-texto);
+    padding: 60px 20px 40px;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid rgba(201, 169, 97, 0.15);
+}
+.footer-conteudo { max-width: 800px; margin: 0 auto; }
+.footer-marca {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--cor-dourada);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+.footer-copy {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cor-footer-texto-suave);
+    margin-bottom: 10px;
+}
+.footer-feito {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--cor-footer-texto-fraco);
+    font-style: italic;
+    margin-top: 15px;
+}
+
+/* ============================================================
+   20. FORMULÁRIO DE CONTATO
+   ============================================================ */
+.form-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 40px 0;
+    text-align: left;
+}
+.form-contato label {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    font-size: 1rem;
+    margin-top: 10px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+.form-contato input,
+.form-contato textarea {
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--cor-texto);
+    background-color: var(--cor-input-fundo);
+    transition: var(--transicao-suave);
+    letter-spacing: 0.3px;
+    box-sizing: border-box;
+}
+.form-contato input:focus,
+.form-contato textarea:focus {
+    outline: none;
+    border-color: var(--cor-dourada);
+    background-color: var(--cor-input-fundo-focus);
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.12);
+    transform: translateY(-2px);
+}
+.form-contato textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+.btn-enviar {
+    display: block;
+    align-self: center;
+    margin-top: 25px;
+    padding: 14px 34px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+    box-shadow: 0 8px 25px var(--cor-sombra-media);
+    font-size: 0.95rem;
+}
+.btn-enviar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px var(--cor-sombra-forte);
+}
+
+/* ============================================================
+   21. BOTÕES DE CONTATO
+   ============================================================ */
+.btn-fale {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: var(--transicao-suave);
+    box-shadow: 0 10px 30px var(--cor-sombra-media);
+    position: relative;
+    overflow: hidden;
+}
+.btn-fale::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transition: left 0.7s ease;
+}
+.btn-fale:hover::before { left: 150%; }
+.btn-fale:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px var(--cor-sombra-forte);
+}
+
+/* ============================================================
+   22. REDES SOCIAIS
+   ============================================================ */
+.redes-sociais {
+    text-align: center;
+    max-width: 580px;
+    margin: 40px auto 0;
+    padding-top: 35px;
+    border-top: 1px solid var(--cor-borda-suave);
+}
+.redes-sociais > p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--cor-texto-suave);
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+.redes-lista {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+.redes-lista a {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--cor-primaria);
+    padding: 11px 26px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1.5px solid var(--cor-borda);
+    transition: var(--transicao-suave);
+}
+.redes-lista a:hover {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    border-color: var(--cor-primaria);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--cor-sombra-media);
+}
+
+/* ============================================================
+   23. BOTÃO TOPO
+   ============================================================ */
+.btn-topo {
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: var(--cor-dourada);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px var(--cor-sombra-forte);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transicao-suave);
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-topo.visivel { opacity: 1; pointer-events: auto; }
+.btn-topo:hover {
+    background: linear-gradient(135deg, var(--cor-dourada), var(--cor-secundaria));
+    color: var(--cor-primaria-escura);
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 15px 40px var(--cor-sombra-dourada);
+}
+
+/* ============================================================
+   24. ANIMAÇÕES DE ENTRADA
+   ============================================================ */
+[data-aos] {
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 1s ease;
+    filter: blur(8px);
+}
+[data-aos].aos-animate { opacity: 1; filter: blur(0); }
+[data-aos="fade-up"] { transform: translateY(60px) scale(0.95); }
+[data-aos="fade-up"].aos-animate { transform: translateY(0) scale(1); }
+[data-aos="fade-left"] { transform: translateX(60px); }
+[data-aos="fade-left"].aos-animate { transform: translateX(0); }
+[data-aos="fade-right"] { transform: translateX(-60px); }
+[data-aos="fade-right"].aos-animate { transform: translateX(0); }
+[data-aos="zoom-in"] { transform: scale(0.85); }
+[data-aos="zoom-in"].aos-animate { transform: scale(1); }
+
+body.modo-foco header,
+body.modo-foco footer,
+body.modo-foco .navegacao-poemas,
+body.modo-foco .compartilhar,
+body.modo-foco .btn-voltar,
+body.modo-foco .barra-progresso { display: none !important; }
+body.modo-foco .poema-conteudo { max-width: 840px; padding: 80px; }
+body.modo-foco .versos { font-size: 1.5rem; line-height: 2.5; }
+
+/* ============================================================
+   25. GALERIA / LIGHTBOX / PENSAMENTOS
+   ============================================================ */
+.galeria-section { padding: 100px 24px; background-color: var(--cor-fundo); text-align: center; }
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.galeria-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px var(--cor-sombra);
+    transition: var(--transicao-suave);
+    position: relative;
+    border: 1px solid var(--cor-borda-suave);
+}
+.galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+.galeria-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px var(--cor-sombra-forte);
+}
+.galeria-item:hover img { transform: scale(1.12); }
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: pointer;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 16px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+}
+.lightbox-fechar {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: var(--cor-dourada);
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: var(--transicao-suave);
+}
+.lightbox-fechar:hover { transform: rotate(90deg); }
+
+.pensamento {
+    background-color: var(--cor-fundo-card);
+    padding: 30px 35px;
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda-suave);
+    border-left: 4px solid var(--cor-dourada);
+    margin-bottom: 25px;
+    text-align: left;
+    box-shadow: 0 6px 20px var(--cor-sombra);
+    transition: var(--transicao-suave);
+}
+.pensamento:hover {
+    transform: translateX(10px);
+    box-shadow: 0 12px 35px var(--cor-sombra-media);
+    border-left-color: var(--cor-primaria);
+}
+.pensamento p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--cor-texto-versos);
+    line-height: 1.9;
+}
+
+/* ============================================================
+   26. EASTER EGG
+   ============================================================ */
+.easter-egg {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.4s ease;
+}
+.easter-egg-conteudo {
+    background-color: var(--cor-fundo-conteudo);
+    padding: 60px 50px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 520px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(201, 169, 97, 0.3);
+    animation: aparecer 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes aparecer {
+    from { opacity: 0; transform: scale(0.7) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.easter-egg-conteudo h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--cor-primaria);
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+}
+.easter-egg-conteudo p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--cor-texto-versos);
+    margin-bottom: 15px;
+}
+.easter-egg-autor {
+    color: var(--cor-dourada) !important;
+    font-weight: 700;
+    margin-bottom: 30px !important;
+    font-size: 1.1rem !important;
+}
+
+/* ============================================================
+   27. ESTATÍSTICAS
+   ============================================================ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 50px auto;
+}
+.stat-card {
+    background-color: var(--cor-fundo-card);
+    padding: 40px 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 6px 25px var(--cor-sombra);
+    border: 1px solid var(--cor-borda-suave);
+    border-top: 3px solid var(--cor-dourada);
+    transition: var(--transicao-suave);
+}
+.stat-card:hover { transform: translateY(-8px); box-shadow: 0 18px 45px var(--cor-sombra-forte); }
+.stat-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-style: italic;
+    color: var(--cor-primaria);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.stat-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--cor-texto-suave);
+    font-size: 1rem;
+}
+
+/* ============================================================
+   28. IMPRESSÃO
+   ============================================================ */
+@media print {
+    header, footer, .btn-voltar, .navegacao-poemas,
+    .compartilhar, .acoes-poema, .btn-topo,
+    #cursor-particulas, #estrelas, #fundo-suave,
+    .filtros-tema, .busca-container, .barra-progresso,
+    .btn-anotar, .painel-anotacao { display: none !important; }
+    body { background-color: #fff !important; color: #000 !important; }
+    .poema-conteudo { box-shadow: none !important; background-color: #fff !important; padding: 0 !important; }
+    .versos { color: #000 !important; font-size: 14pt !important; line-height: 2 !important; }
+}
+
+/* ============================================================
+   29. RESPONSIVO
+   ============================================================ */
+@media (max-width: 900px) {
+    #hero h1 { font-size: 3rem; }
+    .section-title { font-size: 2.2rem; }
+}
+@media (max-width: 700px) {
+    #cursor-particulas { display: none; }
+    #hero { height: 88vh; }
+    #hero h1 { font-size: 2.4rem; }
+    #hero p { font-size: 1.1rem; }
+    nav { flex-wrap: nowrap; gap: 0.5rem; }
+    nav .logo { font-size: 1.3rem; flex: 1; }
+    .btn-menu { order: 3; }
+    .btn-tema { order: 2; }
+    .btn-idioma { order: 1; min-width: 50px; padding: 0 12px; font-size: 0.78rem; }
+    nav ul { width: 320px; padding: 130px 0 30px; }
+    nav ul li { padding: 0 30px; }
+    nav a { font-size: 1.05rem; letter-spacing: 2.5px; padding: 20px 0; }
+    nav a:hover, nav a.active { padding-left: 20px; letter-spacing: 3px; }
+    .section-title { font-size: 1.9rem; }
+    .poema-conteudo { padding: 35px 25px; }
+    .poema-conteudo h1 { font-size: 2rem; }
+    .versos { font-size: 1.05rem; line-height: 2.1; padding: 15px 0 15px 18px; }
+    .versos::first-letter { font-size: 3.2rem; margin: 6px 10px 0 0; }
+    .navegacao-poemas { justify-content: center; }
+    .sobre-img { width: 150px; height: 150px; }
+    .card { flex: 1 1 100%; max-width: 100%; }
+    .btn-topo { width: 48px; height: 48px; bottom: 20px; right: 20px; }
+}
